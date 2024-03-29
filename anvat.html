@@ -169,22 +169,13 @@
         let rand = Math.random();
         let prizeIndex = null;
         console.log(rand);
-        switch (true) {
-          case rand < prizes[4].percentpage:
-            prizeIndex = 4;
+        let totalPercent = 0;
+        for (let i = prizes.length - 1; i >= 0; i--) {
+          totalPercent += prizes[i].percentpage;
+          if (rand < totalPercent) {
+            prizeIndex = i;
             break;
-          case rand < prizes[4].percentpage + prizes[3].percentpage:
-            prizeIndex = 3;
-            break;
-          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage:
-            prizeIndex = 2;
-            break;
-          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage:
-            prizeIndex = 1;
-            break;
-          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage + prizes[0].percentpage:
-            prizeIndex = 0;
-            break;
+          }
         }
         if (prizeIndex && prizes[prizeIndex].number != 0) {
           prizes[prizeIndex].number = prizes[prizeIndex].number - 1
