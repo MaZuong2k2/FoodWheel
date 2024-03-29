@@ -43,6 +43,7 @@ input::-moz-focus-inner {
 }
 
 .button-page {
+  /* position: relative; */
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
@@ -82,12 +83,6 @@ blockquote {
   border-left: 1px solid #1abc9c;
   padding-left: 1em;
   margin: 1em 3em 1em 2em;
-}
-
-@media only screen and ( max-width: 640px ) {
-  blockquote {
-    margin: 1em 0;
-  }
 }
 
 acronym, abbr {
@@ -335,4 +330,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Responsive images */
 .typo img {
   max-width: 100%;
+}
+.app-main{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.btn-direction{
+  z-index: 999;
 }
