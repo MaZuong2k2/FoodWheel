@@ -8,36 +8,25 @@
   <link rel="stylesheet" href="css/typo/typo.css" />
   <link rel="stylesheet" href="css/hc-canvas-luckwheel.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <style>
-    .hc-luckywheel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      margin-top: -250px;
-      margin-left: -250px;
-    }
-  </style>
 </head>
 <h1 style="color: black; font-size:40px; text-align:center; font-weight:bold; padding-top:20px">MÓN ĂN NO</h1>
 
 <body class="bg">
-  <div class="wrapper typo" id="wrapper">
+  <div class="wrapper typo app-main" id="wrapper">
     <section id="luckywheel" class="hc-luckywheel">
       <div class="hc-luckywheel-container">
         <canvas class="hc-luckywheel-canvas" width="500px" height="500px">Vòng quay chọn món</canvas>
       </div>
       <a id="btn-quay" class="hc-luckywheel-btn" href="javascript:;">Chọn món</a>
     </section>
-    <br><br>
-    <div style="display:flex;">
-      <button style="margin-left: 40%;margin-top:36%;" class="button-page">
-        <a href="anvat.html">Món ăn vặt</a> 
+    <div class="btn-direction" >
+      <button  class="button-page">
+        <a href="anvat.html">Món ăn vặt</a>
       </button>
-      <button style="margin-left: 5%;margin-top:36%;" class="button-page">
-        <a href="ansang.html">Món ăn sang</a> 
+      <button  class="button-page">
+        <a href="ansang.html">Món ăn sang</a>
       </button>
     </div>
-    
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="js/hc-canvas-luckwheel.js"></script>
@@ -53,7 +42,7 @@
         text: "Bánh canh cua",
         img: "images/banhcanhcua.png",
         number: 99,
-        percentpage: 0.083 // 8.3%
+        percentpage: 0.083 // 5.5%
       },
       {
         text: "Bún bò",
@@ -122,7 +111,7 @@
         percentpage: 0.083
       },
     ];
-      
+
     document.addEventListener(
       "DOMContentLoaded",
       function () {
@@ -153,9 +142,9 @@
       },
       false
     );
-      //Hàm lấy hình ảnh qua truyền vào bằng tên món
-    function getImage(name){
-      if(!name){
+    //Hàm lấy hình ảnh qua truyền vào bằng tên món
+    function getImage(name) {
+      if (!name) {
         return ""
       }
       return prizes.filter(item => item.text === name)[0].img
