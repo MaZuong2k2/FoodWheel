@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hôm nay ăn gì</title>
+  <link rel="stylesheet" href="css/typo/typo.css" />
+  <link rel="stylesheet" href="css/hc-canvas-luckwheel.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    .hc-luckywheel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -250px;
+      margin-left: -250px;
+    }
+  </style>
+</head>
+<h1 style="color: black; font-size:40px; text-align:center; font-weight:bold; padding-top:20px">MÓN ĂN SANG</h1>
+
+<body class="bg">
+  <div class="wrapper typo" id="wrapper">
+    <section id="luckywheel" class="hc-luckywheel">
+      <div class="hc-luckywheel-container">
+        <canvas class="hc-luckywheel-canvas" width="500px" height="500px">Vòng quay chọn món</canvas>
+      </div>
+      <a id="btn-quay" class="hc-luckywheel-btn" href="javascript:;">Chọn món</a>
+    </section>
+    <br><br>
+    <div style="display:flex;">
+      <button style="margin-left: 40%;margin-top:36%;" class="button-page">
+        <a href="anvat.html">Món ăn vặt</a> 
+      </button>
+      <button style="margin-left: 5%;margin-top:36%;" class="button-page">
+        <a href="index.html">Món ăn no</a> 
+      </button>
+    </div>
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/hc-canvas-luckwheel.js"></script>
+  <script>
+    $("#btn-quay").on("click", function () {
+
+    });
+
+    //Tạo ra ít nhất 5 món
+    var isPercentage = true;
+    var prizes = [
+      {
+        text: "Lẩu",
+        img: "images/lau.png",
+        number: 99,
+        percentpage: 0.5
+      },
+      {
+        text: "Đồ nướng",
+        img: "images/donuong.png",
+        number: 99,
+        percentpage: 0.5
+      },
+      {
+        text: "Steak",
+        img: "images/steak.png",
+        number: 99,
+        percentpage: 0.055
+      },
+      {
+        text: "Sushi",
+        img: "images/sushi.png",
+        number: 99,
+        percentpage: 0.055
+      },
+      {
+        text: "Ăn ốc",
+        img: "images/oc.png",
+        number: 99,
+        percentpage: 0.055
+      },
+      
+    ];
+      
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+        hcLuckywheel.init({
+          id: "luckywheel",
+          config: function (callback) {
+            callback &&
+              callback(prizes);
+          },
+          mode: "both",
+          getPrize: function (callback) {
+            var rand = randomIndex(prizes);
+            var chances = rand;
+            callback && callback([rand, chances]);
+          },
+          gotBack: function (data) {
+            Swal.fire({
+              imageUrl: getImage(data),
+              imageWidth: 200,
+              imageHeight: 200,
+              imageAlt: "Anh-mon-an",
+              title: data,
+              text: `Ăn ${data} nha ^^`,
+            });
+
+          }
+        });
+      },
+      false
+    );
+      //Hàm lấy hình ảnh qua truyền vào bằng tên món
+    function getImage(name){
+      if(!name){
+        return ""
+      }
+      return prizes.filter(item => item.text === name)[0].img
+    }
+    //Tính random phần thưởng
+    function randomIndex(prizes) {
+      if (isPercentage) {
+        var counter = 1;
+        for (let i = 0; i < prizes.length; i++) {
+          if (prizes[i].number == 0) {
+            counter++
+          }
+        }
+        if (counter == prizes.length) {
+          return null
+        }
+        let rand = Math.random();
+        let prizeIndex = null;
+        console.log(rand);
+        switch (true) {
+          case rand < prizes[4].percentpage:
+            prizeIndex = 4;
+            break;
+          case rand < prizes[4].percentpage + prizes[3].percentpage:
+            prizeIndex = 3;
+            break;
+          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage:
+            prizeIndex = 2;
+            break;
+          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage:
+            prizeIndex = 1;
+            break;
+          case rand < prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage + prizes[0].percentpage:
+            prizeIndex = 0;
+            break;
+        }
+        if (prizeIndex && prizes[prizeIndex].number != 0) {
+          prizes[prizeIndex].number = prizes[prizeIndex].number - 1
+          return prizeIndex
+        } else {
+          return randomIndex(prizes)
+        }
+      } else {
+        var counter = 0;
+        for (let i = 0; i < prizes.length; i++) {
+          if (prizes[i].number == 0) {
+            counter++
+          }
+        }
+        if (counter == prizes.length) {
+          return null
+        }
+        var rand = (Math.random() * (prizes.length)) >>> 0;
+        if (prizes[rand].number != 0) {
+          prizes[rand].number = prizes[rand].number - 1
+          return rand
+        } else {
+          return randomIndex(prizes)
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
